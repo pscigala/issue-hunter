@@ -19,8 +19,9 @@ def print_head(repo, labels):
     print(bar)
 
 
-def print_issue_title(issue):
-    print(f' 🤗 {issue["title"]}')
+def print_issue(issue):
+    has_pull_request=f'{("pull_requests" in issue)}'[0]
+    print(f' C:{issue["comments"]}/PR:{has_pull_request} 🤗 #{issue["number"]} {issue["title"]}')
 
 
 repo = 'netlify/netlify-cms'
@@ -30,4 +31,4 @@ issues = get_issue('netlify/netlify-cms', labels)
 
 print_head(repo, labels)
 for issue in issues:
-    print_issue_title(issue)
+    print_issue(issue)
