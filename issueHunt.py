@@ -11,12 +11,23 @@ def get_issue(repo, labels):
     return r.json()
 
 
+def print_head(repo, labels):
+    header = f'#repo: {repo} #labels:{labels}'
+    bar = "=" * (len(header) + 3)
+    print(bar)
+    print(header)
+    print(bar)
+
+
+def print_issue_title(issue):
+    print(f' 🤗 {issue["title"]}')
+
+
 repo = 'netlify/netlify-cms'
 labels = {'area: api', 'area: api'}
-print("=====================================")
-print(f'#repo: {repo} #labels:{labels}')
-print("=====================================")
+
 issues = get_issue('netlify/netlify-cms', labels)
+
+print_head(repo, labels)
 for issue in issues:
-    print(issue)
-    print(issue['title'])
+    print_issue_title(issue)
