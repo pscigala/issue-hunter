@@ -1,3 +1,5 @@
+import datetime
+import json
 import os
 
 import requests
@@ -55,10 +57,28 @@ if useAuth:
 else:
     print("No auth mode")
 
-for i, repo_to_check in enumerate(config.search_list):
-    repo = repo_to_check['repo']
-    labels = repo_to_check['labels']
+
+def store_request_meta(request_meta_json):
+    with open(f'out-{str(datetime.datetime.now().timestamp())}.json', 'a') as json_file:
+        json.dump(request_meta_json, json_file)
+
+
+issues_from_all_repos = []
+
+
+def create_request_meta(repo, labels, issues):
+    issues_from_all_repos.append(
+        [{'repo': repo, 'labels': labels, 'request_date': str(datetime.datetime.today()), 'count': len(issues),
+          'data': issues}])
+
+
+for i, repo_to_search in enumerate(config.search_list):
+    repo = repo_to_search['repo']
+    labels = repo_to_search['labels']
     print_head(repo, labels)
     issues = get_issue(repo, labels)
+    create_request_meta(repo, labels, issues)
     for issue in issues:
         print_issue(issue)
+
+store_request_meta(issues_from_all_repos)

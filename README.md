@@ -11,4 +11,5 @@ python issueHunt.py
 
 - [ ] add support for auth credentials from params
 - [x] add support for loading search_list from external file
-- [ ] add support for result saving to external file
+- [x] add support for result saving to external file
+- [ ] add auth icon support
