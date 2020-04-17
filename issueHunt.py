@@ -5,6 +5,7 @@ import os
 import requests
 
 import config
+import template
 
 
 def get_github_user():
@@ -58,7 +59,7 @@ else:
     print("No auth mode")
 
 
-def store_request_meta(request_meta_json):
+def store_request_meta_json(request_meta_json):
     with open(f'out-{str(datetime.datetime.now().timestamp())}.json', 'a') as json_file:
         json.dump(request_meta_json, json_file)
 
@@ -72,6 +73,11 @@ def create_request_meta(repo, labels, issues):
           'data': issues}])
 
 
+def store_html(request_meta_json):
+    with open(f'out-{str(datetime.datetime.now().timestamp())}.html', 'a') as file:
+        file.write(template.render(request_meta_json))
+
+
 for i, repo_to_search in enumerate(config.search_list):
     repo = repo_to_search['repo']
     labels = repo_to_search['labels']
@@ -81,4 +87,6 @@ for i, repo_to_search in enumerate(config.search_list):
     for issue in issues:
         print_issue(issue)
 
-store_request_meta(issues_from_all_repos)
+store_request_meta_json(issues_from_all_repos)
+
+store_html(issues_from_all_repos)
