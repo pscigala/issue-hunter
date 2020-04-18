@@ -8,15 +8,19 @@ def css():
 
 def row(request_meta_json):
     rows = ''
-    for repo in request_meta_json:
-        for repo_issues in repo:
-            for issue in repo_issues['data']:
+    for meta in request_meta_json:
+        for repo in meta:
+            rows += f'''
+<tr class="mdc-data-table__row">
+    <td class="mdc-data-table__cell mdc-data-table__cell" colspan="4">{repo["repo"]} | {repo["labels"]}</td>
+</tr>'''
+            for issue in repo['data']:
                 rows += f'''
 <tr class="mdc-data-table__row">
-    <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{issue["number"]}</td>
+    <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><a href="{issue["html_url"]}" target="_blank">#{issue["number"]}</a></td>
     <td class="mdc-data-table__cell">{issue["title"]}</td>
     <td class="mdc-data-table__cell mdc-data-table__cell--numeric">{issue["comments"]}</td>
-    <td class="mdc-data-table__cell mdc-data-table__cell--numeric"><a href="{issue["html_url"]}" target="_blank">Link</a></td>
+    <td class="mdc-data-table__cell mdc-data-table__cell"><a href="{issue["html_url"]}" target="_blank">Link</a></td>
 </tr>
 '''
     return rows

@@ -12,6 +12,9 @@ python issueHunt.py
 - [ ] add support for auth credentials from params
 - [x] add support for loading search_list from external file
 - [x] add support for result saving to external file
-- [ ] add support for html result file
+- [x] add support for html result file
+- [ ] make html output as optional param
+- [ ] make json output as optional param
+- [ ] add link in html output to filtered issues on github
 - [ ] add better documentation 
 - [ ] add auth icon support
